@@ -17,9 +17,12 @@ import Logout from "./logout";
 import { redirect, useRouter } from "next/navigation";
 import NavLinks from "./nav-links";
 import { getUserById } from "@/app/actions/user";
+import { getNotifications } from "@/app/actions/admin";
+import Notifications from "./notif/notification";
 
 export default async function Navbar() {
   const session = await auth();
+  //@ts-ignore
   const loggedInUser = session?.user;
   const userId = loggedInUser?.id;
 
@@ -78,6 +81,9 @@ export default async function Navbar() {
         </Sheet>
       </div>
       <div className="flex items-center gap-4 md:ml-auto md:gap-2 lg:gap-4">
+        <div>
+          <Notifications userId={userId} />
+        </div>
         {loggedInUser?.name ? (
           <>
             <span className="text-sm text-muted-foreground">
@@ -97,14 +103,7 @@ export default async function Navbar() {
                   ) : (
                     <>
                       {!userData?.user?.image ? (
-                        <Image
-                          //@ts-ignore
-                          src={loggedInUser?.image}
-                          alt="User Image"
-                          width={20}
-                          height={20}
-                          className="rounded-full w-full h-full"
-                        />
+                        <CircleUser className="h-5 w-5" />
                       ) : (
                         <Image
                           src={

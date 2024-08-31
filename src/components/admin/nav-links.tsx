@@ -50,7 +50,7 @@ export default function NavLinks({ user }: { user: any }) {
             <Link
               href="/staffs"
               className={`flex items-center gap-3 rounded-lg px-3 py-2 text-muted-foreground transition-all hover:text-primary mt-2 ${
-                isActive("/users") ? "bg-muted text-primary" : ""
+                isActive("/staffs") ? "bg-muted text-primary" : ""
               }`}
             >
               <Users className="h-4 w-4" />

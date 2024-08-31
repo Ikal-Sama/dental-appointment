@@ -19,12 +19,22 @@ import {
   TooltipTrigger,
 } from "@/components/ui/tooltip";
 import Link from "next/link";
+import { useState } from "react";
+import { roleChange } from "@/app/actions/admin";
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select";
 
 export type Users = {
   id: string;
   name: string;
   email: string;
   address: string;
+  role: string;
   appointments: [];
 };
 
@@ -57,6 +67,51 @@ export const columns: ColumnDef<Users>[] = [
     header: "Address",
   },
   {
+    accessorKey: "role",
+    header: "Role",
+    cell: ({ row }) => {
+      const { toast } = useToast();
+      //@ts-ignore
+      const user = row.original._id;
+      const [selectedRole, setSelectedRole] = useState(user.role);
+
+      const handleRoleChange = async (event: any) => {
+        const newRole = event.target.value;
+        setSelectedRole(newRole);
+        // Call API to update user role
+        await roleChange(user, newRole).then((data) => {
+          if (data?.success) {
+            toast({
+              title: "Role updated",
+              description: `Role updated successfully for user ${user.name}!`,
+            });
+          }
+        });
+      };
+
+      return (
+        <Select>
+          <SelectTrigger className="w-[120px] text-xs">
+            <SelectValue placeholder="Change Role" />
+          </SelectTrigger>
+          <SelectContent>
+            <SelectItem value="frontdesk" className="text-xs">
+              Front Desk
+            </SelectItem>
+            <SelectItem value="secretary" className="text-xs">
+              Secretary
+            </SelectItem>
+          </SelectContent>
+        </Select>
+        // <select value={selectedRole} onChange={handleRoleChange}>
+        //   <option value="user">--Change Role--</option>
+        //   <option value="secretary">Secretary</option>
+        //   <option value="frontdesk">Front Desk</option>
+        // </select>
+      );
+    },
+  },
+  {
     accessorKey: "appointments",
     header: "Appointments",
     cell: ({ row }) => {
@@ -78,10 +133,8 @@ export const columns: ColumnDef<Users>[] = [
               <DropdownMenu>
                 <DropdownMenuTrigger asChild>
                   <Link href={`/users/${id}`}>
-                    <Button variant="ghost" className="h-8 w-8 p-0">
-                      <MoreHorizontal className="h-4 w-4" />
-                      <span className="sr-only">Open menu</span>
-                    </Button>
+                    <MoreHorizontal className="h-4 w-4" />
+                    <span className="sr-only">Open menu</span>
                   </Link>
                 </DropdownMenuTrigger>
               </DropdownMenu>

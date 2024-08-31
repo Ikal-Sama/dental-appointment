@@ -22,7 +22,22 @@ export default function AppointmentsTabs({
   userId: string;
   appointments: object;
 }) {
-  // console.log(appointments);
+  //@ts-ignore
+  const newAppointments = appointments.appointments.filter(
+    (item: any) => item.status === "new"
+  );
+  //@ts-ignore
+  const ongoingAppointments = appointments.appointments.filter(
+    (item: any) => item.status === "ongoing"
+  );
+  //@ts-ignore
+  const doneAppointments = appointments.appointments.filter(
+    (item: any) => item.status === "done"
+  );
+  //@ts-ignore
+  const canceledAppointments = appointments.appointments.filter(
+    (item: any) => item.status === "canceled"
+  );
 
   return (
     <Tabs defaultValue="new" className="w-full">
@@ -33,91 +48,56 @@ export default function AppointmentsTabs({
         <TabsTrigger value="canceled">Canceled</TabsTrigger>
       </TabsList>
       <TabsContent value="new" className="">
-        {
-          //@ts-ignore
-          appointments.appointments.filter((item: any) => item.status === "new")
-            .length > 0 ? (
-            //@ts-ignore
-            appointments.appointments
-              .filter((item: any) => item.status === "new")
-              .map((item: any) => (
-                <Card className="p-5">
-                  <DataTable columns={columns} data={[item]} key={item._id} />
-                </Card>
-              ))
-          ) : (
-            <Card>
-              <CardHeader className="text-center text-zinc-500">
-                No New Appointments
-              </CardHeader>
-            </Card>
-          )
-        }
+        {newAppointments.length > 0 ? (
+          <Card className="p-5">
+            <DataTable columns={columns} data={newAppointments} />
+          </Card>
+        ) : (
+          <Card>
+            <CardHeader className="text-center text-zinc-500">
+              No New Appointments
+            </CardHeader>
+          </Card>
+        )}
       </TabsContent>
       <TabsContent value="ongoing" className="">
-        {
-          //@ts-ignore
-          appointments.appointments.filter(
-            (item: any) => item.status === "ongoing"
-          ).length > 0 ? (
-            //@ts-ignore
-            appointments.appointments
-              .filter((item: any) => item.status === "ongoing")
-              .map((item: any) => (
-                <Card className="p-5">
-                  <DataTable columns={columns} data={[item]} key={item.id} />
-                </Card>
-              ))
-          ) : (
-            <Card>
-              <CardHeader className="text-center text-zinc-500">
-                No Ongoing Appointments
-              </CardHeader>
-            </Card>
-          )
-        }
+        {ongoingAppointments.length > 0 ? (
+          <Card className="p-5">
+            <DataTable columns={columns} data={ongoingAppointments} />
+          </Card>
+        ) : (
+          <Card>
+            <CardHeader className="text-center text-zinc-500">
+              No Ongoing Appointments
+            </CardHeader>
+          </Card>
+        )}
       </TabsContent>
       <TabsContent value="done">
-        {
-          //@ts-ignore
-          appointments.appointments.filter(
-            (item: any) => item.status === "done"
-          ).length > 0 ? (
-            //@ts-ignore
-            appointments.appointments
-              .filter((item: any) => item.status === "done")
-              .map((item: any) => (
-                <DataTable columns={columns} data={[item]} key={item._id} />
-              ))
-          ) : (
-            <Card>
-              <CardHeader className="text-center text-zinc-500">
-                No Done Appointments
-              </CardHeader>
-            </Card>
-          )
-        }
+        {doneAppointments.length > 0 ? (
+          <Card className="p-5">
+            <DataTable columns={columns} data={doneAppointments} />
+          </Card>
+        ) : (
+          <Card>
+            <CardHeader className="text-center text-zinc-500">
+              No Done Appointments
+            </CardHeader>
+          </Card>
+        )}
       </TabsContent>
       <TabsContent value="canceled">
-        {
-          //@ts-ignore
-          appointments.appointments.filter(
-            (item: any) => item.status === "canceled"
-          ).length > 0 ? (
-            //@ts-ignore
-            appointments.appointments
-              .filter((item: any) => item.status === "canceled")
-              .map((item: any) => (
-                <DataTable columns={columns} data={[item]} key={item._id} />
-              ))
-          ) : (
-            <Card>
-              <CardHeader className="text-center text-zinc-500">
-                No Canceled Appointments
-              </CardHeader>
-            </Card>
-          )
-        }
+        {canceledAppointments.length > 0 ? (
+          <Card className="p-5">
+            <DataTable columns={columns} data={canceledAppointments} />
+          </Card>
+        ) : (
+          <Card>
+            <CardHeader className="text-center text-zinc-500">
+              No Canceled Appointments
+            </CardHeader>
+          </Card>
+        )}
       </TabsContent>
     </Tabs>
   );

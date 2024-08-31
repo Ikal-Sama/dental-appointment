@@ -13,7 +13,7 @@ export default async function page() {
   }
 
   return (
-    <div className="flex gap-10">
+    <div className="flex gap-10 flex-col lg:flex-row ">
       <div>
         <RegisterForm />
       </div>

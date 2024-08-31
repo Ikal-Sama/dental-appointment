@@ -43,7 +43,9 @@ export default function AppointmentForm({ userId }: { userId: string }) {
   const [appointmentDetails, setAppointmentDetails] = useState<{
     id: string;
     patientName: string;
+    patientPhone: number;
     service: string;
+    date: Date;
   } | null>(null);
   const [dialogOpen, setDialogOpen] = useState(false);
 
@@ -79,6 +81,8 @@ export default function AppointmentForm({ userId }: { userId: string }) {
           setAppointmentDetails({
             id: data.newAppointment._id,
             patientName: data.newAppointment.patientName,
+            patientPhone: data.newAppointment.patientPhone,
+            date: data.newAppointment.date,
             service: data.newAppointment.service,
           });
           setDialogOpen(true);
@@ -240,6 +244,12 @@ export default function AppointmentForm({ userId }: { userId: string }) {
               )}
               {appointmentDetails.patientName && (
                 <p>Patient Name: {appointmentDetails.patientName}</p>
+              )}
+              {appointmentDetails.patientPhone && (
+                <p>Phone Number: {appointmentDetails.patientPhone}</p>
+              )}
+              {appointmentDetails.date && (
+                <p>Date: {appointmentDetails.date.toLocaleDateString()}</p>
               )}
               {appointmentDetails.service && (
                 <p>Service Type: {appointmentDetails.service}</p>

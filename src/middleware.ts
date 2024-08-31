@@ -9,14 +9,11 @@ import { PUBLIC_ROUTES,PROTECTED_SUB_ROUTES, LOGIN, ROOT } from "./lib/routes";
 export async function middleware(request: NextRequest) {
     const {nextUrl} = request;
     const session = await auth()
-    console.log(session);
     
     const isAuthenticated = !!session?.user;
-    console.log(isAuthenticated, nextUrl.pathname);
 
     const isPublicRoute = ((PUBLIC_ROUTES.find(route => nextUrl.pathname.startsWith(route)) || nextUrl.pathname === ROOT) && !PROTECTED_SUB_ROUTES.find(route => nextUrl.pathname.includes(route)));
 
-    console.log(isPublicRoute);
 
     if(!isAuthenticated && !isPublicRoute) {
         return NextResponse.redirect(new URL(LOGIN, nextUrl))

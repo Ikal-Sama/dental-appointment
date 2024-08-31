@@ -117,7 +117,7 @@ export default async function page() {
 
       <div className="flex mt-10 gap-5 justify-evenly">
         <Card className="xl:col-span-2 w-full" x-chunk="dashboard-01-chunk-4">
-          <CardHeader className="flex flex-row items-center">
+          <CardHeader className="flex flex-col lg:flex-row items-center">
             <div className="grid gap-2">
               <CardTitle>Recent Appointments</CardTitle>
               <CardDescription>

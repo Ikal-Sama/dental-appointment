@@ -12,7 +12,7 @@ export default async function page() {
     redirect("/");
   }
   return (
-    <div className="flex gap-10">
+    <div className="flex flex-col lg:flex-row gap-10">
       <div>
         <LoginForm />
       </div>

@@ -168,8 +168,8 @@ export const columns: ColumnDef<Appointments>[] = [
                 await acceptAppointment(id).then((data) => {
                   if (data.success) {
                     toast({
-                      title: "Appointment marked as done",
-                      description: "The appointment has been marked as done.",
+                      title: "Appointment Accepted",
+                      description: "The appointment has been accepted.",
                     });
                   } else {
                     toast({

@@ -40,16 +40,29 @@ import {
 import { Input } from "@/components/ui/input";
 import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet";
 import Logout from "../users/logout";
+import Notifications from "./notif/notification";
 
 export default async function Navbar() {
   const session = await auth();
+  //@ts-ignore
+  const role = session?.user?.role;
+  const userId = session?.user?.id;
+  // console.log(userId);
+
   const loggedIn = session?.user;
 
   if (!loggedIn) {
     redirect("/login");
   }
-  //@ts-ignore
-  if (loggedIn && loggedIn.role !== "admin" && loggedIn.role !== "secretary") {
+  if (
+    loggedIn &&
+    //@ts-ignore
+    loggedIn.role !== "admin" &&
+    //@ts-ignore
+    loggedIn.role !== "secretary" &&
+    //@ts-ignore
+    loggedIn.role !== "frontdesk"
+  ) {
     redirect("/");
   }
 
@@ -184,6 +197,10 @@ export default async function Navbar() {
         </SheetContent>
       </Sheet>
       <div className="w-full flex-1"></div>
+      <div>
+        {/* This is where i put the bell icon that has the notfication */}
+        <Notifications role={role} userId={userId} />
+      </div>
       <span className="text-muted-foreground">{session?.user?.name}</span>
       <DropdownMenu>
         <DropdownMenuTrigger asChild>

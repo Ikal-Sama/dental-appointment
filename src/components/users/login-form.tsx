@@ -42,7 +42,11 @@ export const LoginForm = () => {
 
         setIsPending(false);
       } else {
-        if (response.role === "admin" || response.role === "secretary") {
+        if (
+          response.role === "admin" ||
+          response.role === "secretary" ||
+          response.role === "frontdesk"
+        ) {
           toast({
             title: "Login Admin Successful",
             description: "Welcome back!",

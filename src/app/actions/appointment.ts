@@ -3,6 +3,7 @@
 import { auth } from "@/auth";
 import { dbConnect } from "@/lib/mongo-connect";
 import Appointments from "@/models/appointments";
+import Notification from "@/models/notification";
 import User from "@/models/user-model";
 import { revalidatePath } from "next/cache";
 
@@ -62,6 +63,16 @@ export async function createAppointment({
 
         user.appointments.push(newAppointment._id);
         await user.save();
+
+        const admins = await User.find({ $or: [{ role: 'admin' }, { role: 'secretary' }] });
+        admins.forEach((admin) => {
+            const notification = new Notification({
+            userId: admin._id,
+            appointmentId: newAppointment._id,
+            message: `${user.name}`,
+            });
+            notification.save();
+        });
 
         return { success: "Appointment created successfully", newAppointment };
 
@@ -154,7 +165,20 @@ export async function userCancelAppointments(appointmentId: string) {
 
         appointment.status = "canceled";
         await appointment.save();
+
+        const adminUser = await User.findOne({ $or: [{ role: 'admin' }, { role: 'secretary' }] });
+        if (adminUser) {
+          const notification = new Notification({
+            userId: adminUser._id,
+            appointmentId: appointment._id,
+            message: `User has canceled appointment`,
+          });
+          await notification.save();
+        }
+
         revalidatePath("/myappointments")
+
+      
         return { success: "Appointment is canceled" };
 
     } catch (error) {
