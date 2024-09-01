@@ -19,14 +19,8 @@ import {
   ArrowUpDown,
   Trash,
 } from "lucide-react";
-import {
-  Tooltip,
-  TooltipContent,
-  TooltipProvider,
-  TooltipTrigger,
-} from "@/components/ui/tooltip";
+
 import Link from "next/link";
-import { markAsDone } from "@/app/actions/appointment";
 import { deleteAppointment, markAppointmentAsDone } from "@/app/actions/admin";
 
 export type Appointments = {
@@ -122,46 +116,50 @@ export const columns: ColumnDef<Appointments>[] = [
   },
   {
     id: "actions",
-    cell: ({ row }) => {
-      //@ts-ignore
-      const id: any = row.original._id;
-      const { toast } = useToast();
-      return (
-        <DropdownMenu>
-          <DropdownMenuTrigger asChild>
-            <Button variant="ghost" className="h-8 w-8 p-0">
-              <span className="sr-only">Open menu</span>
-              <MoreHorizontal className="h-4 w-4" />
-            </Button>
-          </DropdownMenuTrigger>
-          <DropdownMenuContent align="end">
-            <DropdownMenuLabel>Actions</DropdownMenuLabel>
-            <DropdownMenuSeparator />
-
-            <DropdownMenuItem
-              className="text-sm flex gap-2 p-1 items-center text-red-500 cursor-pointer hover:bg-zinc-100 focus:outline-none"
-              onClick={async () => {
-                await deleteAppointment(id).then((data) => {
-                  if (data.success) {
-                    toast({
-                      title: "Delete appointment",
-                      description: `${data.success}`,
-                    });
-                  } else {
-                    toast({
-                      title: "Something went wrong",
-                      description: `${data.error}`,
-                    });
-                  }
-                });
-              }}
-            >
-              <Trash className="w-4 h-4 " />
-              Delete
-            </DropdownMenuItem>
-          </DropdownMenuContent>
-        </DropdownMenu>
-      );
-    },
+    cell: ({ row }) => <ActionsCell row={row} />,
   },
 ];
+
+function ActionsCell({ row }: { row: any }) {
+  const id: any = row.original._id;
+  const { toast } = useToast();
+
+  const handleDeleteAppointment = async () => {
+    await deleteAppointment(id).then((data) => {
+      if (data.success) {
+        toast({
+          title: "Delete appointment",
+          description: `${data.success}`,
+        });
+      } else {
+        toast({
+          title: "Something went wrong",
+          description: `${data.error}`,
+        });
+      }
+    });
+  };
+
+  return (
+    <DropdownMenu>
+      <DropdownMenuTrigger asChild>
+        <Button variant="ghost" className="h-8 w-8 p-0">
+          <span className="sr-only">Open menu</span>
+          <MoreHorizontal className="h-4 w-4" />
+        </Button>
+      </DropdownMenuTrigger>
+      <DropdownMenuContent align="end">
+        <DropdownMenuLabel>Actions</DropdownMenuLabel>
+        <DropdownMenuSeparator />
+
+        <DropdownMenuItem
+          className="text-sm flex gap-2 p-1 items-center text-red-500 cursor-pointer hover:bg-zinc-100 focus:outline-none"
+          onClick={handleDeleteAppointment}
+        >
+          <Trash className="w-4 h-4 " />
+          Delete
+        </DropdownMenuItem>
+      </DropdownMenuContent>
+    </DropdownMenu>
+  );
+}

@@ -125,77 +125,83 @@ export const columns: ColumnDef<Appointments>[] = [
   },
   {
     id: "actions",
-    cell: ({ row }) => {
-      //@ts-ignore
-      const id: any = row.original._id;
-      const { toast } = useToast();
-      return (
-        <DropdownMenu>
-          <DropdownMenuTrigger asChild>
-            <Button variant="ghost" className="h-8 w-8 p-0">
-              <span className="sr-only">Open menu</span>
-              <MoreHorizontal className="h-4 w-4" />
-            </Button>
-          </DropdownMenuTrigger>
-          <DropdownMenuContent align="end">
-            <DropdownMenuLabel>Actions</DropdownMenuLabel>
-            <DropdownMenuSeparator />
-            <DropdownMenuItem
-              className="text-sm flex items-center gap-2 p-1 text-orange-500 cursor-pointer hover:bg-zinc-100 focus:outline-none"
-              onClick={async () => {
-                await cancelAppointment(id).then((data) => {
-                  if (data.success) {
-                    toast({
-                      title: "Appointment marked as canceled",
-                      description: `${data.success}`,
-                    });
-                  } else {
-                    toast({
-                      variant: "destructive",
-                      title: "Something went wrong",
-                      description: `${data.error}`,
-                    });
-                  }
-                });
-              }}
-            >
-              <Ban className="w-4 h-4" />
-              Cancel
-            </DropdownMenuItem>
-            <DropdownMenuItem
-              className="text-sm flex items-center gap-2 p-1 text-primary cursor-pointer hover:bg-zinc-100 focus:outline-none"
-              onClick={async () => {
-                await acceptAppointment(id).then((data) => {
-                  if (data.success) {
-                    toast({
-                      title: "Appointment Accepted",
-                      description: "The appointment has been accepted.",
-                    });
-                  } else {
-                    toast({
-                      variant: "destructive",
-                      title: "Something went wrong",
-                      description: `${data.error}`,
-                    });
-                  }
-                });
-              }}
-            >
-              <Check className="w-4 h-4 " />
-              Accept
-            </DropdownMenuItem>
-            <DropdownMenuItem className="text-sm flex items-center gap-2 p-1 text-violet-500 cursor-pointer hover:bg-zinc-100 focus:outline-none">
-              <Link
-                href={`/appointments/new/${id}`}
-                className="flex items-center gap-2"
-              >
-                <Eye className="w-4 h-4" />
-                See Details
-              </Link>
-            </DropdownMenuItem>
-          </DropdownMenuContent>
-        </DropdownMenu>
-      );
-    },
+    cell: ({ row }) => <ActionsCell row={row} />,
   },
 ];
+
+function ActionsCell({ row }: { row: any }) {
+  const id: any = row.original._id;
+  const { toast } = useToast();
+
+  const handleCancel = async () => {
+    await cancelAppointment(id).then((data) => {
+      if (data.success) {
+        toast({
+          title: "Appointment marked as canceled",
+          description: `${data.success}`,
+        });
+      } else {
+        toast({
+          variant: "destructive",
+          title: "Something went wrong",
+          description: `${data.error}`,
+        });
+      }
+    });
+  };
+
+  const handleAccept = async () => {
+    await acceptAppointment(id).then((data) => {
+      if (data.success) {
+        toast({
+          title: "Appointment Accepted",
+          description: "The appointment has been accepted.",
+        });
+      } else {
+        toast({
+          variant: "destructive",
+          title: "Something went wrong",
+          description: `${data.error}`,
+        });
+      }
+    });
+  };
+
+  return (
+    <DropdownMenu>
+      <DropdownMenuTrigger asChild>
+        <Button variant="ghost" className="h-8 w-8 p-0">
+          <span className="sr-only">Open menu</span>
+          <MoreHorizontal className="h-4 w-4" />
+        </Button>
+      </DropdownMenuTrigger>
+      <DropdownMenuContent align="end">
+        <DropdownMenuLabel>Actions</DropdownMenuLabel>
+        <DropdownMenuSeparator />
+        <DropdownMenuItem
+          className="text-sm flex items-center gap-2 p-1 text-orange-500 cursor-pointer hover:bg-zinc-100 focus:outline-none"
+          onClick={handleCancel}
+        >
+          <Ban className="w-4 h-4" />
+          Cancel
+        </DropdownMenuItem>
+        <DropdownMenuItem
+          className="text-sm flex items-center gap-2 p-1 text-primary cursor-pointer hover:bg-zinc-100 focus:outline-none"
+          onClick={handleAccept}
+        >
+          <Check className="w-4 h-4 " />
+          Accept
+        </DropdownMenuItem>
+        <DropdownMenuItem className="text-sm flex items-center gap-2 p-1 text-violet-500 cursor-pointer hover:bg-zinc-100 focus:outline-none">
+          <Link
+            href={`/appointments/new/${id}`}
+            className="flex items-center gap-2"
+          >
+            <Eye className="w-4 h-4" />
+            See Details
+          </Link>
+        </DropdownMenuItem>
+      </DropdownMenuContent>
+    </DropdownMenu>
+  );
+}

@@ -162,6 +162,9 @@ export async function userCancelAppointments(appointmentId: string) {
         if(appointment.status === "ongoing"){
             return { error: "Cannot cancel accepted appointment" };
         }
+        if(appointment.status === "canceled"){
+            return {error: "Appointment is already canceled"}
+        }
 
         appointment.status = "canceled";
         await appointment.save();

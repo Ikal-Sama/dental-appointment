@@ -122,76 +122,82 @@ export const columns: ColumnDef<Appointments>[] = [
   },
   {
     id: "actions",
-    cell: ({ row }) => {
-      //@ts-ignore
-      const id = row.original._id;
-      const { toast } = useToast();
-      return (
-        <DropdownMenu>
-          <DropdownMenuTrigger asChild>
-            <Button variant="ghost" className="h-8 w-8 p-0">
-              <span className="sr-only">Open menu</span>
-              <MoreHorizontal className="h-4 w-4" />
-            </Button>
-          </DropdownMenuTrigger>
-          <DropdownMenuContent align="end">
-            <DropdownMenuLabel>Actions</DropdownMenuLabel>
-            <DropdownMenuSeparator />
-            <DropdownMenuItem
-              onClick={async () => {
-                await userDeleteAppointment(id)
-                  .then((data) => {
-                    if (data.success) {
-                      toast({
-                        title: "Appointment deleted",
-                        description: `${data.success}`,
-                      });
-                    } else {
-                      toast({
-                        variant: "destructive",
-                        title: "Something went wrong",
-                        description: `${data.error}`,
-                      });
-                    }
-                  })
-                  .catch((e) => {
-                    console.log(e.error);
-                  });
-              }}
-              className="text-sm  text-red-500 flex items-center gap-2 p-1 hover:bg-zinc-100 cursor-pointer duration-200"
-            >
-              <Trash2 className="w-4 h-4" />
-              Delete
-            </DropdownMenuItem>
-            <DropdownMenuItem
-              onClick={async () => {
-                await userCancelAppointments(id)
-                  .then((data) => {
-                    if (data.success) {
-                      toast({
-                        title: "Appointment cancelled",
-                        description: `${data.success}`,
-                      });
-                    } else {
-                      toast({
-                        variant: "destructive",
-                        title: "Something went wrong",
-                        description: `${data.error}`,
-                      });
-                    }
-                  })
-                  .catch((e) => {
-                    console.log(e.error);
-                  });
-              }}
-              className="text-sm  text-orange-500 flex items-center gap-2 p-1 hover:bg-zinc-100 cursor-pointer duration-200"
-            >
-              <Ban className="w-4 h-4" />
-              Cancel
-            </DropdownMenuItem>
-          </DropdownMenuContent>
-        </DropdownMenu>
-      );
-    },
+    cell: ({ row }) => <ActionsCell row={row} />,
   },
 ];
+
+function ActionsCell({ row }: { row: any }) {
+  const id = row.original._id;
+  const { toast } = useToast();
+
+  const handleDelete = async () => {
+    await userDeleteAppointment(id)
+      .then((data) => {
+        if (data.success) {
+          toast({
+            title: "Appointment deleted",
+            description: `${data.success}`,
+          });
+        } else {
+          toast({
+            variant: "destructive",
+            title: "Something went wrong",
+            description: `${data.error}`,
+          });
+        }
+      })
+      .catch((e) => {
+        console.log(e.error);
+      });
+  };
+
+  const handleCancel = async () => {
+    await userCancelAppointments(id)
+      .then((data) => {
+        if (data.success) {
+          toast({
+            title: "Appointment cancelled",
+            description: `${data.success}`,
+          });
+        } else {
+          toast({
+            variant: "destructive",
+            title: "Something went wrong",
+            description: `${data.error}`,
+          });
+        }
+      })
+      .catch((e) => {
+        console.log(e.error);
+      });
+  };
+
+  return (
+    <DropdownMenu>
+      <DropdownMenuTrigger asChild>
+        <Button variant="ghost" className="h-8 w-8 p-0">
+          <span className="sr-only">Open menu</span>
+          <MoreHorizontal className="h-4 w-4" />
+        </Button>
+      </DropdownMenuTrigger>
+      <DropdownMenuContent align="end">
+        <DropdownMenuLabel>Actions</DropdownMenuLabel>
+        <DropdownMenuSeparator />
+        <DropdownMenuItem
+          onClick={handleDelete}
+          className="text-sm  text-red-500 flex items-center gap-2 p-1 hover:bg-zinc-100 cursor-pointer duration-200"
+        >
+          <Trash2 className="w-4 h-4" />
+          Delete
+        </DropdownMenuItem>
+        <DropdownMenuItem
+          onClick={handleCancel}
+          className="text-sm  text-orange-500 flex items-center gap-2 p-1 hover:bg-zinc-100 cursor-pointer duration-200"
+        >
+          <Ban className="w-4 h-4" />
+          Cancel
+        </DropdownMenuItem>
+      </DropdownMenuContent>
+    </DropdownMenu>
+  );
+}

@@ -69,47 +69,7 @@ export const columns: ColumnDef<Users>[] = [
   {
     accessorKey: "role",
     header: "Role",
-    cell: ({ row }) => {
-      const { toast } = useToast();
-      //@ts-ignore
-      const user = row.original._id;
-      const [selectedRole, setSelectedRole] = useState(user.role);
-
-      const handleRoleChange = async (event: any) => {
-        const newRole = event.target.value;
-        setSelectedRole(newRole);
-        // Call API to update user role
-        await roleChange(user, newRole).then((data) => {
-          if (data?.success) {
-            toast({
-              title: "Role updated",
-              description: `Role updated successfully for user ${user.name}!`,
-            });
-          }
-        });
-      };
-
-      return (
-        <Select>
-          <SelectTrigger className="w-[120px] text-xs">
-            <SelectValue placeholder="Change Role" />
-          </SelectTrigger>
-          <SelectContent>
-            <SelectItem value="frontdesk" className="text-xs">
-              Front Desk
-            </SelectItem>
-            <SelectItem value="secretary" className="text-xs">
-              Secretary
-            </SelectItem>
-          </SelectContent>
-        </Select>
-        // <select value={selectedRole} onChange={handleRoleChange}>
-        //   <option value="user">--Change Role--</option>
-        //   <option value="secretary">Secretary</option>
-        //   <option value="frontdesk">Front Desk</option>
-        // </select>
-      );
-    },
+    cell: ({ row }) => <HeaderCell row={row} />,
   },
   {
     accessorKey: "appointments",
@@ -125,7 +85,6 @@ export const columns: ColumnDef<Users>[] = [
     cell: ({ row }) => {
       //@ts-ignore
       const id: any = row.original._id;
-      const { toast } = useToast();
       return (
         <TooltipProvider>
           <Tooltip>
@@ -148,3 +107,40 @@ export const columns: ColumnDef<Users>[] = [
     },
   },
 ];
+
+function HeaderCell({ row }: { row: any }) {
+  const { toast } = useToast();
+  //@ts-ignore
+  const user = row.original._id;
+  const [selectedRole, setSelectedRole] = useState({});
+
+  const handleRoleChange = async (newRole: string) => {
+    // const newRole = event.target.value;
+    setSelectedRole(newRole);
+    // Call API to update user role
+    await roleChange(user, newRole).then((data) => {
+      if (data?.success) {
+        toast({
+          title: "Role updated",
+          description: `Role updated successfully!`,
+        });
+      }
+    });
+  };
+
+  return (
+    <Select onValueChange={handleRoleChange}>
+      <SelectTrigger className="w-[120px] text-xs">
+        <SelectValue placeholder="Change role" />
+      </SelectTrigger>
+      <SelectContent>
+        <SelectItem value="frontdesk" className="text-xs">
+          Front Desk
+        </SelectItem>
+        <SelectItem value="secretary" className="text-xs">
+          Secretary
+        </SelectItem>
+      </SelectContent>
+    </Select>
+  );
+}

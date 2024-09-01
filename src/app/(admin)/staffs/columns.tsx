@@ -74,7 +74,7 @@ export const columns: ColumnDef<Users>[] = [
     cell: ({ row }) => {
       //@ts-ignore
       const id: any = row.original._id;
-      const { toast } = useToast();
+      // const { toast } = useToast();
       return (
         <TooltipProvider>
           <Tooltip>
