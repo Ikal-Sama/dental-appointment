@@ -7,7 +7,7 @@ export default async function page() {
 
   return (
     <div>
-      <h1 className="my-5 text-xl font-semibold">New Appointments</h1>
+      <h1 className="my-5 text-xl font-semibold">Pending Appointments</h1>
       <NewAppointments newappointments={newappointments} />
     </div>
   );

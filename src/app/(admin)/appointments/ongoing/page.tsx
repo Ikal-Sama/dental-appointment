@@ -8,7 +8,7 @@ export default async function page() {
   return (
     <div>
       <h1 className="my-5 text-xl font-semibold">
-        Accepted/Ongoing Appointments
+        Proceeding/Ongoing Appointments
       </h1>
       <OngoingAppointments ongoing={ongoing} />
     </div>

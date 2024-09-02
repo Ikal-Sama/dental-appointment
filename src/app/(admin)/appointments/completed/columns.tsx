@@ -133,6 +133,7 @@ function ActionsCell({ row }: { row: any }) {
         });
       } else {
         toast({
+          variant: "destructive",
           title: "Something went wrong",
           description: `${data.error}`,
         });

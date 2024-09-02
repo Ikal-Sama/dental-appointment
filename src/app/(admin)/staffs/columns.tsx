@@ -19,6 +19,7 @@ import {
   TooltipTrigger,
 } from "@/components/ui/tooltip";
 import Link from "next/link";
+import Image from "next/image";
 
 export type Users = {
   id: string;
@@ -38,9 +39,11 @@ export const columns: ColumnDef<Users>[] = [
       const imageUrl = user.image ? user.image : "/assets/avatar.png"; // default image URL
       return (
         <div className="flex items-center gap-2">
-          <img
+          <Image
             src={imageUrl}
             alt={user.name}
+            width={40}
+            height={40}
             className="w-8 h-8 rounded-full"
           />
           <span>{user.name}</span>

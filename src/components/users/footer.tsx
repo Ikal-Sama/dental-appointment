@@ -64,6 +64,11 @@ export default function Footer() {
           </Link>
         </div>
       </div>
+      <div>
+        <p className="text-center text-gray-400 text-sm p-2">
+          &copy; 2024 Gonzales Dental Clinic. All rights reserved.
+        </p>
+      </div>
     </div>
   );
 }

@@ -70,6 +70,7 @@ export default function ChangePassword() {
 
   async function onSubmit(values: z.infer<typeof EditSecurity>) {
     try {
+      // ...
       if (values.newPassword !== values.confirmNewPassword) {
         setError("New password don't match");
         return;
@@ -78,38 +79,9 @@ export default function ChangePassword() {
         setError("Please enter your old password");
         return;
       }
-      const userId: any = params.id;
-      setOpenDialog(true);
-      await changeSecurity({
-        //@ts-ignore
-        id: userId,
-        oldPassword: values.oldPassword,
-        password: values.newPassword,
-        email: values.email,
-      })
-        .then((data) => {
-          if (data.success) {
-            setOpenDialog(false);
-            toast({
-              title: "Update Successfull",
-              description: "Password updated successfully",
-            });
-          } else {
-            toast({
-              variant: "destructive",
-              title: "Something went wrong",
-              description: `${data.error}`,
-            });
-            setError(data.error);
-          }
-        })
-        .catch((e) => {
-          setError(e.message);
-          setOpenDialog(false);
-        });
+      setOpenDialog(true); // Open the dialog
     } catch (error: any) {
       console.log(error.message);
-      setOpenDialog(false);
       setError("An error occurred while updating password");
     }
   }
@@ -120,6 +92,40 @@ export default function ChangePassword() {
   //   form.handleSubmit(onSubmit)(); // Call the onSubmit function to submit the form
   //   setOpenDialog(false);
   // };
+
+  const handleContinue = async () => {
+    await changeSecurity({
+      //@ts-ignore
+      id: params.id,
+      oldPassword: form.getValues().oldPassword,
+      password: form.getValues().newPassword,
+      email: form.getValues().email,
+    })
+      .then((data) => {
+        if (data.success) {
+          toast({
+            title: "Update Successfull",
+            description: "Password updated successfully",
+          });
+        } else {
+          toast({
+            variant: "destructive",
+            title: "Something went wrong",
+            description: `${data.error}`,
+          });
+          setError(data.error);
+        }
+      })
+      .catch((e) => {
+        setError(e.message);
+      });
+    setOpenDialog(false); // Close the dialog
+  };
+
+  const handleCancel = () => {
+    setOpenDialog(false); // Close the dialog
+  };
+
   return (
     <>
       <Card className="mt-10 p-5">
@@ -235,11 +241,8 @@ export default function ChangePassword() {
             </AlertDialogDescription>
           </AlertDialogHeader>
           <AlertDialogFooter className="flex items-center gap-2">
-            <AlertDialogCancel>Cancel</AlertDialogCancel>
-            <AlertDialogAction
-              onClick={() => setOpenDialog(false)}
-              className="mt-1.5"
-            >
+            <AlertDialogCancel onClick={handleCancel}>Cancel</AlertDialogCancel>
+            <AlertDialogAction onClick={handleContinue} className="mt-1.5">
               Continue
             </AlertDialogAction>
           </AlertDialogFooter>

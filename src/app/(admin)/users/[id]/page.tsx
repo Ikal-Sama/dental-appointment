@@ -10,7 +10,7 @@ import { Label } from "@/components/ui/label";
 import { Switch } from "@/components/ui/switch";
 import DeactivateUser from "@/components/admin/deactivate-user";
 import { BookOpen, BookUser } from "lucide-react";
-export default function page() {
+export default function Page() {
   const params = useParams();
 
   const [userDetails, setUserDetails] = useState<any>({});

@@ -42,9 +42,9 @@ export default function AppointmentsTabs({
   return (
     <Tabs defaultValue="new" className="w-full">
       <TabsList className="grid w-full grid-cols-4 mb-5">
-        <TabsTrigger value="new">New</TabsTrigger>
-        <TabsTrigger value="ongoing">Ongoing</TabsTrigger>
-        <TabsTrigger value="done">Done</TabsTrigger>
+        <TabsTrigger value="new">Pending</TabsTrigger>
+        <TabsTrigger value="ongoing">Proceeding</TabsTrigger>
+        <TabsTrigger value="done">Completed</TabsTrigger>
         <TabsTrigger value="canceled">Canceled</TabsTrigger>
       </TabsList>
       <TabsContent value="new" className="">
@@ -55,7 +55,7 @@ export default function AppointmentsTabs({
         ) : (
           <Card>
             <CardHeader className="text-center text-zinc-500">
-              No New Appointments
+              No Pending Appointments
             </CardHeader>
           </Card>
         )}
@@ -68,7 +68,7 @@ export default function AppointmentsTabs({
         ) : (
           <Card>
             <CardHeader className="text-center text-zinc-500">
-              No Ongoing Appointments
+              No Proceeding Appointments
             </CardHeader>
           </Card>
         )}
@@ -81,7 +81,7 @@ export default function AppointmentsTabs({
         ) : (
           <Card>
             <CardHeader className="text-center text-zinc-500">
-              No Done Appointments
+              No Completed Appointments
             </CardHeader>
           </Card>
         )}

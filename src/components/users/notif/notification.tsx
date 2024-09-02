@@ -58,7 +58,7 @@ export default function Notifications({ userId }: { userId: any }) {
     <div className="flex relative">
       <DropdownMenu>
         <DropdownMenuTrigger className="hover:bg-zinc-100 p-1 rounded-lg">
-          <BellIcon className="w-5 h-5 mr-2" />
+          <BellIcon className="w-5 h-5 mr-2 text-zinc-500" />
           {unreadNotifications > 0 && (
             <span className="bg-red-500 text-white text-xs rounded-full px-2 py-0.5 absolute top-0 left-4">
               {unreadNotifications}
