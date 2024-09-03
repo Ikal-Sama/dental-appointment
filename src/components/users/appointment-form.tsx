@@ -23,10 +23,13 @@ import {
   SelectTrigger,
   SelectValue,
 } from "../ui/select";
-import { createAppointment } from "@/app/actions/appointment";
+import {
+  createAppointment,
+  getAllAppointments,
+} from "@/app/actions/appointment";
 import { useToast } from "../ui/use-toast";
 import Image from "next/image";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import {
   Dialog,
   DialogClose,
@@ -48,6 +51,20 @@ export default function AppointmentForm({ userId }: { userId: string }) {
     date: Date;
   } | null>(null);
   const [dialogOpen, setDialogOpen] = useState(false);
+  const [existingAppointments, setExistingAppointments] = useState<any[]>([]);
+
+  useEffect(() => {
+    const fetchAppointments = async () => {
+      try {
+        const appointments = await getAllAppointments();
+        //@ts-ignore
+        setExistingAppointments(appointments.allAppointments);
+      } catch (error) {
+        console.error("Failed to fetch appointments:", error);
+      }
+    };
+    fetchAppointments();
+  }, []);
 
   const form = useForm<z.infer<typeof AppointmentSchema>>({
     resolver: zodResolver(AppointmentSchema),
@@ -62,11 +79,28 @@ export default function AppointmentForm({ userId }: { userId: string }) {
 
   async function onSubmit(values: z.infer<typeof AppointmentSchema>) {
     console.log("onSubmit called with values:", values);
-    // const transformedValues = {
-    //   ...values,
-    //   date: new Date(values.date),
-    // };
-    // if (dialogOpen) return;
+
+    const selectedDate = new Date(values.date).toISOString().split("T")[0];
+    const selectedTime = values.hour;
+
+    const existingAppointment = existingAppointments.find((appointment) => {
+      const appointmentDate = new Date(appointment.date)
+        .toISOString()
+        .split("T")[0];
+      return (
+        appointmentDate === selectedDate && appointment.hour === selectedTime
+      );
+    });
+
+    if (existingAppointment) {
+      toast({
+        variant: "destructive",
+        title: "Time and Date slot already booked",
+        description: "Please select another time slot and date",
+      });
+      return; // Prevent submission
+    }
+
     await createAppointment(
       //@ts-ignore
       { id: userId, ...values }
@@ -174,7 +208,11 @@ export default function AppointmentForm({ userId }: { userId: string }) {
                   <FormItem>
                     <FormLabel>Hour</FormLabel>
                     <FormControl>
-                      <Input type="time" placeholder="shadcn" {...field} />
+                      <Input
+                        type="time"
+                        {...field}
+                        onFocus={(e) => e.target.showPicker()}
+                      />
                     </FormControl>
 
                     <FormMessage />
@@ -191,6 +229,7 @@ export default function AppointmentForm({ userId }: { userId: string }) {
                       <Input
                         type="date"
                         {...field}
+                        onFocus={(e) => e.target.showPicker()}
                         min={new Date().toISOString().split("T")[0]}
                       />
                     </FormControl>
@@ -207,7 +246,7 @@ export default function AppointmentForm({ userId }: { userId: string }) {
                 <h1 className="text-xl text-emerald-500 mb-3">Read Me:</h1>
                 <li>Make sure to input all fields</li>
                 <li>Our working hours is 9:00 AM - 4:00 PM</li>
-                <li>Our working days are Monday - Friday</li>
+                <li>Our working days are Monday - Sunday</li>
                 <li>
                   You can't create another appointment if you already have
                   ongoing appointment

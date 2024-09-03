@@ -18,6 +18,7 @@ import {
   Trash2,
   ArrowUpDown,
   Trash,
+  Eye,
 } from "lucide-react";
 
 import Link from "next/link";
@@ -159,6 +160,15 @@ function ActionsCell({ row }: { row: any }) {
         >
           <Trash className="w-4 h-4 " />
           Delete
+        </DropdownMenuItem>
+        <DropdownMenuItem className="text-sm flex items-center gap-2 p-1 text-violet-500 cursor-pointer hover:bg-zinc-100 focus:outline-none">
+          <Link
+            href={`/appointments/new/${id}`}
+            className="flex items-center gap-2"
+          >
+            <Eye className="w-4 h-4" />
+            See Details
+          </Link>
         </DropdownMenuItem>
       </DropdownMenuContent>
     </DropdownMenu>

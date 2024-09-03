@@ -7,7 +7,7 @@ export default async function page() {
   const loggedIn = session?.user;
 
   //@ts-ignore
-  if (loggedIn?.role !== "admin") {
+  if (!["admin", "secretary"].includes(loggedIn?.role)) {
     redirect("/appointments/new");
   }
   return (

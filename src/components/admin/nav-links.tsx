@@ -80,17 +80,6 @@ export default function NavLinks({ user }: { user: any }) {
               Proceeding
             </Link>
             <Link
-              href="/appointments/completed"
-              className={`flex items-center gap-3 rounded-lg px-3 py-2 text-muted-foreground transition-all hover:text-primary mt-2 ${
-                isActive("/appointments/completed")
-                  ? "bg-muted text-primary"
-                  : ""
-              }`}
-            >
-              <CalendarCheck2 className="h-4 w-4" />
-              Completed
-            </Link>
-            <Link
               href="/appointments/canceled"
               className={`flex items-center gap-3 rounded-lg px-3 py-2 text-muted-foreground transition-all hover:text-primary mt-2 ${
                 isActive("/appointments/canceled")
@@ -100,6 +89,17 @@ export default function NavLinks({ user }: { user: any }) {
             >
               <CalendarX2 className="h-4 w-4" />
               Canceled
+            </Link>
+            <Link
+              href="/appointments/completed"
+              className={`flex items-center gap-3 rounded-lg px-3 py-2 text-muted-foreground transition-all hover:text-primary mt-2 ${
+                isActive("/appointments/completed")
+                  ? "bg-muted text-primary"
+                  : ""
+              }`}
+            >
+              <CalendarCheck2 className="h-4 w-4" />
+              Completed/History
             </Link>
           </div>
         </>
@@ -142,17 +142,6 @@ export default function NavLinks({ user }: { user: any }) {
               Proceeding
             </Link>
             <Link
-              href="/appointments/completed"
-              className={`flex items-center gap-3 rounded-lg px-3 py-2 text-muted-foreground transition-all hover:text-primary mt-2 ${
-                isActive("/appointments/completed")
-                  ? "bg-muted text-primary"
-                  : ""
-              }`}
-            >
-              <CalendarCheck2 className="h-4 w-4" />
-              Completed
-            </Link>
-            <Link
               href="/appointments/canceled"
               className={`flex items-center gap-3 rounded-lg px-3 py-2 text-muted-foreground transition-all hover:text-primary mt-2 ${
                 isActive("/appointments/canceled")
@@ -162,6 +151,17 @@ export default function NavLinks({ user }: { user: any }) {
             >
               <CalendarX2 className="h-4 w-4" />
               Canceled
+            </Link>
+            <Link
+              href="/appointments/completed"
+              className={`flex items-center gap-3 rounded-lg px-3 py-2 text-muted-foreground transition-all hover:text-primary mt-2 ${
+                isActive("/appointments/completed")
+                  ? "bg-muted text-primary"
+                  : ""
+              }`}
+            >
+              <CalendarCheck2 className="h-4 w-4" />
+              Completed/History
             </Link>
           </div>
         </>

@@ -57,8 +57,10 @@ export default function page() {
       </section>
 
       <section className="mt-[10rem]">
-        <h1 className="text-4xl text-zinc-700 font-bold">Services</h1>
-        <p className="text-sm text-zinc-500">Choose what services you want</p>
+        <h1 className="text-4xl text-zinc-700 font-bold">Popular Services</h1>
+        <p className="text-sm text-zinc-500">
+          Top most selected services in clinic
+        </p>
 
         <div className="mt-16 flex flex-col md:flex-col lg:flex-row gap-12">
           <Image

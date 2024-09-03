@@ -81,11 +81,11 @@ export default async function Navbar() {
         </Sheet>
       </div>
       <div className="flex items-center gap-4 md:ml-auto md:gap-2 lg:gap-4">
-        <div>
-          <Notifications userId={userId} />
-        </div>
         {loggedInUser?.name ? (
           <>
+            <div>
+              <Notifications userId={userId} />
+            </div>
             <span className="text-sm text-muted-foreground">
               {!userData?.user ? loggedInUser?.name : userData?.user.name}
             </span>

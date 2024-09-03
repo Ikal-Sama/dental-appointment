@@ -19,8 +19,10 @@ import { Button } from "../ui/button";
 import { useState, useTransition } from "react";
 import { register } from "@/app/actions/user";
 import { useRouter } from "next/navigation";
+import { useToast } from "../ui/use-toast";
 
 export const RegisterForm = () => {
+  const { toast } = useToast();
   const router = useRouter();
   const [error, setError] = useState<string | undefined>();
   const [isPending, startTransition] = useTransition();
@@ -44,6 +46,11 @@ export const RegisterForm = () => {
       }
       register(values).then((data) => {
         if (data.success) {
+          toast({
+            title: "Registration Successful",
+            description: "You have been registered successfully.",
+            duration: 5000,
+          });
           router.push("/login");
         } else {
           setError(data.error);

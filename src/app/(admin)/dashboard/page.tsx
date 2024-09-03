@@ -63,6 +63,9 @@ export default async function page() {
   const ongoingAppointmentsCount = allAppointments?.filter(
     (appointment) => appointment.status === "ongoing"
   ).length;
+  const completedAppointmentsCount = allAppointments?.filter(
+    (appointment) => appointment.status === "done"
+  ).length;
 
   return (
     <div>
@@ -105,11 +108,13 @@ export default async function page() {
         </Card>
         <Card x-chunk="dashboard-01-chunk-2">
           <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-            <CardTitle className="text-sm font-medium">Total</CardTitle>
+            <CardTitle className="text-sm font-medium">Completed</CardTitle>
             <CalendarArrowUp className="h-4 w-4 text-muted-foreground" />
           </CardHeader>
           <CardContent>
-            <div className="text-2xl font-bold">{allAppointments?.length}</div>
+            <div className="text-2xl font-bold">
+              {completedAppointmentsCount}
+            </div>
             <p className="text-xs text-muted-foreground">Appointments</p>
           </CardContent>
         </Card>

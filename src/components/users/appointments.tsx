@@ -44,8 +44,8 @@ export default function AppointmentsTabs({
       <TabsList className="grid w-full grid-cols-4 mb-5">
         <TabsTrigger value="new">Pending</TabsTrigger>
         <TabsTrigger value="ongoing">Proceeding</TabsTrigger>
-        <TabsTrigger value="done">Completed</TabsTrigger>
         <TabsTrigger value="canceled">Canceled</TabsTrigger>
+        <TabsTrigger value="done">Completed/History</TabsTrigger>
       </TabsList>
       <TabsContent value="new" className="">
         {newAppointments.length > 0 ? (
