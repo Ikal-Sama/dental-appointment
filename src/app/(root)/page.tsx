@@ -133,11 +133,11 @@ export default function page() {
           />
           <div>
             <h1 className="text-2xl uppercase tracking-wider font-semibold">
-              Dental Braces
+              Orthodontics
             </h1>
             <div className=" flex flex-col gap-5">
               <p className="mt-5 text-zinc-500 text-sm leading-snug">
-                Dental braces help protect your teeth and gums from injury. We
+                Orthodontics help protect your teeth and gums from injury. We
                 offer various types, including bridge braces, interlocking
                 braces, and dental crowns.
               </p>

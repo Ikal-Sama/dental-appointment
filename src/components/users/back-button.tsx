@@ -13,7 +13,9 @@ export const BackButton = ({ href, label, text }: BackButtonProps) => {
     <div className="flex items-center text-sm">
       <p className="text-sm">{text}</p>
       <Button variant="link" className="" size="sm" asChild>
-        <Link href={href}>{label}</Link>
+        <Link href={href} className="underline hover:text-teal-600">
+          {label}
+        </Link>
       </Button>
     </div>
   );

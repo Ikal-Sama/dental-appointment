@@ -6,7 +6,8 @@ export default function page() {
       <section
         className="rounded-md h-[20rem] w-full p-12 text-white flex flex-col items-center justify-center "
         style={{
-          backgroundImage: 'url("/assets/images/image6.jpg")',
+          backgroundImage:
+            'url("https://images.unsplash.com/photo-1643660527095-bfb19b49994a?q=80&w=2070&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D")',
           backgroundSize: "cover",
           backgroundPosition: "center",
           backgroundRepeat: "no-repeat",
