@@ -1,4 +1,14 @@
 "use client";
+import HeroImage1 from "../../../public/assets/images/image1.jpg";
+import HeroImage3 from "../../../public/assets/images/image3.jpg";
+import customer1 from "../../../public/assets/images/customer1.jpg";
+import customer2 from "../../../public/assets/images/customer2.jpg";
+import customer3 from "../../../public/assets/images/customer3.jpg";
+import customer4 from "../../../public/assets/images/customer4.jpg";
+import customer5 from "../../../public/assets/images/customer5.jpg";
+import services1 from "../../../public/assets/services-1.jpg";
+import services2 from "../../../public/assets/services-2.jpg";
+import services3 from "../../../public/assets/services-3.jpg";
 
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
@@ -40,15 +50,15 @@ export default function page() {
         </div>
         <div className='w-full flex justify-center relative'>
           <Image
-            src='/assets/images/image1.jpg'
-            alt='Hero Image'
+            src={HeroImage1}
+            alt='Hero Image 1'
             height={400}
             width={400}
             className='rounded-lg shadow-lg object-cover'
           />
           <Image
-            src='/assets/images/image3.jpg'
-            alt='Hero Image'
+            src={HeroImage3}
+            alt='Hero Image 2'
             height={300}
             width={300}
             className='rounded-lg shadow-lg object-cover absolute top-36 right-0'
@@ -64,8 +74,8 @@ export default function page() {
 
         <div className='mt-16 flex flex-col md:flex-col lg:flex-row gap-12'>
           <Image
-            src='/assets/services-1.jpg'
-            alt='Services'
+            src={services1}
+            alt='Services1'
             height={500}
             width={500}
             className='object-cover rounded-md'
@@ -95,8 +105,8 @@ export default function page() {
 
         <div className='mt-24 flex flex-col md:flex-col lg:flex-row-reverse gap-12'>
           <Image
-            src='/assets/services-2.jpg'
-            alt='Services'
+            src={services2}
+            alt='Servicesv2'
             height={500}
             width={500}
             className='object-cover rounded-md'
@@ -125,8 +135,8 @@ export default function page() {
 
         <div className='mt-24 flex flex-col md:flex-col lg:flex-row gap-12'>
           <Image
-            src='/assets/services-3.jpg'
-            alt='Services'
+            src={services3}
+            alt='Services3'
             height={500}
             width={500}
             className='object-cover rounded-md'
@@ -172,7 +182,7 @@ export default function page() {
             <CarouselContent>
               <CarouselItem className='md:basis-1/2 lg:basis-1/4'>
                 <Image
-                  src='/assets/images/customer1.jpg'
+                  src={customer1}
                   alt='Customer 1'
                   width={300}
                   height={300}
@@ -181,8 +191,8 @@ export default function page() {
               </CarouselItem>
               <CarouselItem className='md:basis-1/2 lg:basis-1/4'>
                 <Image
-                  src='/assets/images/customer2.jpg'
-                  alt='Customer 1'
+                  src={customer2}
+                  alt='Customer 2'
                   width={300}
                   height={300}
                   className='rounded-md h-full'
@@ -190,8 +200,8 @@ export default function page() {
               </CarouselItem>
               <CarouselItem className='md:basis-1/2 lg:basis-1/4'>
                 <Image
-                  src='/assets/images/customer3.jpg'
-                  alt='Customer 1'
+                  src={customer3}
+                  alt='Customer 3'
                   width={300}
                   height={300}
                   className='rounded-md h-full'
@@ -199,8 +209,8 @@ export default function page() {
               </CarouselItem>
               <CarouselItem className='md:basis-1/2 lg:basis-1/4'>
                 <Image
-                  src='/assets/images/customer4.jpg'
-                  alt='Customer 1'
+                  src={customer4}
+                  alt='Customer 4'
                   width={300}
                   height={300}
                   className='rounded-md h-full'
@@ -208,8 +218,8 @@ export default function page() {
               </CarouselItem>
               <CarouselItem className='md:basis-1/2 lg:basis-1/4'>
                 <Image
-                  src='/assets/images/customer5.jpg'
-                  alt='Customer 1'
+                  src={customer5}
+                  alt='Customer 5'
                   width={300}
                   height={300}
                   className='rounded-md h-full'
