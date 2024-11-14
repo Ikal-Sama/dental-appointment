@@ -29,50 +29,50 @@ export default async function Navbar() {
   const userData = await getUserById(userId);
 
   return (
-    <header className="sticky top-0 flex h-16 items-center justify-between gap-4 border-b bg-background px-4 md:px-6 z-10">
-      <div className="">
+    <header className='sticky top-0 flex h-16 items-center justify-between gap-4 border-b bg-background px-4 md:px-6 z-10'>
+      <div className=''>
         <NavLinks />
         <Sheet>
           <SheetTrigger asChild>
             <Button
-              variant="outline"
-              size="icon"
-              className="shrink-0 md:hidden"
+              variant='outline'
+              size='icon'
+              className='shrink-0 md:hidden'
             >
-              <Menu className="h-5 w-5" />
-              <span className="sr-only">Toggle navigation menu</span>
+              <Menu className='h-5 w-5' />
+              <span className='sr-only'>Toggle navigation menu</span>
             </Button>
           </SheetTrigger>
-          <SheetContent side="left">
-            <nav className="grid gap-6 text-lg font-medium">
+          <SheetContent side='left'>
+            <nav className='grid gap-6 text-lg font-medium'>
               <Link
-                href="#"
-                className="flex items-center gap-2 text-lg font-semibold md:text-base"
+                href='#'
+                className='flex items-center gap-2 text-lg font-semibold md:text-base'
               >
-                <Package2 className="h-6 w-6" />
-                <span className="sr-only">GDC</span>
+                <Package2 className='h-6 w-6' />
+                <span className='sr-only'>GDC</span>
               </Link>
               <Link
-                href="/"
-                className="text-muted-foreground transition-colors hover:text-foreground"
+                href='/'
+                className='text-muted-foreground transition-colors hover:text-foreground'
               >
                 Home
               </Link>
               <Link
-                href="/services"
-                className="text-muted-foreground transition-colors hover:text-foreground"
+                href='/services'
+                className='text-muted-foreground transition-colors hover:text-foreground'
               >
                 Services
               </Link>
               <Link
-                href="/about"
-                className="text-muted-foreground transition-colors hover:text-foreground"
+                href='/about'
+                className='text-muted-foreground transition-colors hover:text-foreground'
               >
                 About
               </Link>
               <Link
-                href="/contactus"
-                className="text-muted-foreground transition-colors hover:text-foreground"
+                href='/contactus'
+                className='text-muted-foreground transition-colors hover:text-foreground'
               >
                 Contact Us
               </Link>
@@ -80,48 +80,48 @@ export default async function Navbar() {
           </SheetContent>
         </Sheet>
       </div>
-      <div className="flex items-center gap-4 md:ml-auto md:gap-2 lg:gap-4">
+      <div className='flex items-center gap-4 md:ml-auto md:gap-2 lg:gap-4'>
         {loggedInUser?.name ? (
           <>
             <div>
               <Notifications userId={userId} />
             </div>
-            <span className="text-sm text-muted-foreground">
+            <span className='text-sm text-muted-foreground'>
               {!userData?.user ? loggedInUser?.name : userData?.user.name}
             </span>
             <DropdownMenu>
               <DropdownMenuTrigger asChild>
                 <Button
-                  variant="secondary"
-                  size="icon"
-                  className="rounded-full"
+                  variant='secondary'
+                  size='icon'
+                  className='rounded-full'
                 >
                   {!userData?.user && !loggedInUser ? (
                     //@ts-ignore
 
-                    <CircleUser className="h-5 w-5" />
+                    <CircleUser className='h-5 w-5' />
                   ) : (
                     <>
                       {!userData?.user?.image ? (
-                        <CircleUser className="h-5 w-5" />
+                        <CircleUser className='h-5 w-5' />
                       ) : (
                         <Image
                           src={
                             //@ts-ignore
                             userData?.user?.image
                           }
-                          alt="User Image"
+                          alt='User Image'
                           width={20}
                           height={20}
-                          className="rounded-full w-full h-full"
+                          className='rounded-full w-full h-full'
                         />
                       )}
                     </>
                   )}
-                  <span className="sr-only">Toggle user menu</span>
+                  <span className='sr-only'>Toggle user menu</span>
                 </Button>
               </DropdownMenuTrigger>
-              <DropdownMenuContent align="end">
+              <DropdownMenuContent align='end'>
                 <DropdownMenuLabel>My Account</DropdownMenuLabel>
                 <DropdownMenuSeparator />
                 <DropdownMenuItem>
@@ -139,7 +139,7 @@ export default async function Navbar() {
                   <Link href={`/myappointments`}>Appointments</Link>
                 </DropdownMenuItem>
                 <DropdownMenuSeparator />
-                <div className="px-2 py-1">
+                <div className='px-2 py-1'>
                   <Logout />
                 </div>
               </DropdownMenuContent>
@@ -147,8 +147,8 @@ export default async function Navbar() {
           </>
         ) : (
           <>
-            <Link href="/login">
-              <Button className="bg-teal-600 hover:bg-teal-700">Sign in</Button>
+            <Link href='/login'>
+              <Button className='bg-teal-600 hover:bg-teal-700'>Sign in</Button>
             </Link>
           </>
         )}
