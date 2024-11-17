@@ -24,10 +24,57 @@ import {
   CarouselNext,
   CarouselPrevious,
 } from "@/components/ui/carousel";
+import { useAnnouncementStore } from "@/lib/store/announcement";
+import { useEffect, useState } from "react";
+import {
+  AlertDialog,
+  AlertDialogAction,
+  AlertDialogContent,
+  AlertDialogDescription,
+  AlertDialogFooter,
+  AlertDialogHeader,
+  AlertDialogTitle,
+  AlertDialogTrigger,
+} from "@/components/ui/alert-dialog";
 
 export default function page() {
+  const announcement = useAnnouncementStore((state) => state.announcement);
+  const clearAnnouncement = useAnnouncementStore(
+    (state) => state.clearAnnouncement
+  );
+  const [isOpen, setIsOpen] = useState(false);
+
+  useEffect(() => {
+    if (announcement?.isOpen) {
+      setIsOpen(true);
+    }
+  }, [announcement]);
+
+  const handleDismiss = () => {
+    setIsOpen(false);
+    clearAnnouncement(); // Clear the announcement from the store
+  };
+
   return (
     <div className='mt-20'>
+      {announcement && (
+        <AlertDialog open={isOpen} onOpenChange={setIsOpen}>
+          <AlertDialogTrigger className='hidden'></AlertDialogTrigger>
+          <AlertDialogContent>
+            <AlertDialogHeader>
+              <AlertDialogTitle>{announcement.title}</AlertDialogTitle>
+              <AlertDialogDescription>
+                {announcement.description}
+              </AlertDialogDescription>
+            </AlertDialogHeader>
+            <AlertDialogFooter>
+              <AlertDialogAction onClick={handleDismiss}>
+                Dismiss
+              </AlertDialogAction>
+            </AlertDialogFooter>
+          </AlertDialogContent>
+        </AlertDialog>
+      )}
       <section className='flex flex-col gap-10 md:flex-col lg:flex-row'>
         <div className='w-full flex flex-col items-center md:items-start gap-5'>
           <h1 className='text-2xl md:text-4xl font-semibold text-zinc-700 leading-snug'>
