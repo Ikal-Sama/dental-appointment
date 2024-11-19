@@ -77,3 +77,17 @@ export const medicalHistorySchema = z.object({
     medication: z.string(),
     immunization: z.string(),
 })
+
+export const ServicesSchema = z.object({
+    name: z.string().min(1, "Name is required"), // Ensure it's not empty
+    description: z.string().min(1, "Description is required"), // Ensure it's not empty
+    price: z.preprocess(
+      (value) => Number(value),
+      z.number().positive("Price must be a positive number") // Prevent zero and negative values
+    ),
+    duration: z.preprocess(
+      (value) => Number(value),
+      z.number().positive("Duration must be a positive number") // Prevent zero and negative values
+    ),
+    image: z.string().min(1, "Image is required"), // Ensure the image field is not empty
+  });

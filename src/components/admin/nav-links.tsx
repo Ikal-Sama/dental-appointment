@@ -11,6 +11,7 @@ import {
   CalendarX2,
   Home,
   Megaphone,
+  Stethoscope,
   Users,
 } from "lucide-react";
 
@@ -116,6 +117,16 @@ export default function NavLinks({ user }: { user: any }) {
               <Megaphone className='h-4 w-4' />
               Announcement
             </Link>
+
+            <Link
+              href='/addservices'
+              className={`flex items-center gap-3 rounded-lg px-3 py-2 text-muted-foreground transition-all hover:text-primary mt-2 ${
+                isActive("/addservices") ? "bg-muted text-primary" : ""
+              }`}
+            >
+              <Stethoscope className='h-4 w-4' />
+              Services
+            </Link>
           </div>
         </>
       ) : (
@@ -177,6 +188,31 @@ export default function NavLinks({ user }: { user: any }) {
             >
               <CalendarCheck2 className='h-4 w-4' />
               Completed/History
+            </Link>
+          </div>
+
+          <div className='my-2'>
+            <span className='text-white p-1 px-2 rounded-full text-xs  bg-teal-400'>
+              Settings
+            </span>
+            <Link
+              href='/announcement'
+              className={`flex items-center gap-3 rounded-lg px-3 py-2 text-muted-foreground transition-all hover:text-primary mt-2 ${
+                isActive("/announcement") ? "bg-muted text-primary" : ""
+              }`}
+            >
+              <Megaphone className='h-4 w-4' />
+              Announcement
+            </Link>
+
+            <Link
+              href='/addservices'
+              className={`flex items-center gap-3 rounded-lg px-3 py-2 text-muted-foreground transition-all hover:text-primary mt-2 ${
+                isActive("/addservices") ? "bg-muted text-primary" : ""
+              }`}
+            >
+              <Stethoscope className='h-4 w-4' />
+              Services
             </Link>
           </div>
         </>

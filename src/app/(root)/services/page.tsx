@@ -1,17 +1,20 @@
+import { getAllServices } from "@/app/actions/services";
 import { Button } from "@/components/ui/button";
 import { servicesData } from "@/data/services-data";
-import { PhilippinePeso } from "lucide-react";
+import { PhilippinePeso, Timer } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
 
-export default function ServicesPage() {
+import background from "../../../../public/assets/images/servicebg.png";
+
+export default async function ServicesPage() {
+  const services = (await getAllServices()) as any;
   return (
     <div>
       <div
         className='rounded-md h-[20rem] w-full p-12 text-white'
         style={{
-          backgroundImage:
-            'url("https://scontent.fmnl8-4.fna.fbcdn.net/v/t39.30808-6/447213525_122173709828018742_5555327902044451575_n.jpg?stp=cp6_dst-jpg_s600x600&_nc_cat=107&ccb=1-7&_nc_sid=833d8c&_nc_eui2=AeFv_DpY3nBRHYAx2cFGU8e8dlRzPQMJyht2VHM9AwnKG4KN0qb_LrKdXQ9ZjtXkdg39B1HIt69fBwd9Pu0HjnDp&_nc_ohc=3mwWuTVPJSYQ7kNvgFYYQYw&_nc_ht=scontent.fmnl8-4.fna&oh=00_AYCOpo8DwEqR8R-dCuVhEebCwzhi2aT1R5h-VfyjCj7ZCw&oe=66DF4CEE")',
+          backgroundImage: `url("https://static.vecteezy.com/system/resources/thumbnails/022/814/155/small_2x/white-healthy-tooth-different-tools-for-dental-care-blue-background-generative-ai-photo.jpg")`,
           backgroundSize: "cover",
           backgroundPosition: "center",
           backgroundRepeat: "no-repeat",
@@ -24,7 +27,7 @@ export default function ServicesPage() {
       </div>
 
       <section className='mt-20'>
-        {servicesData.map((service) => (
+        {services.map((service: any) => (
           <div
             className='flex-col lg:flex-row flex gap-20 mt-10 items-center'
             key={service.id}
@@ -50,7 +53,19 @@ export default function ServicesPage() {
                 {service.price}
               </p>
 
-              <Link href='/appoint'>
+              <p className='my-3 text-teal-500 flex gap-3'>
+                <strong>
+                  <Timer className='w-5 h-5' />
+                </strong>
+                {service.duration} hr/hrs
+              </p>
+
+              <Link
+                href={{
+                  pathname: "/appoint",
+                  query: { service: service.name },
+                }}
+              >
                 <Button className='mt-3 bg-teal-600 hover:bg-teal-700'>
                   Book Now
                 </Button>

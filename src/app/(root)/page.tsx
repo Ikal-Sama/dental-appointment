@@ -1,11 +1,6 @@
-"use client";
 import HeroImage1 from "../../../public/assets/images/image1.jpg";
 import HeroImage3 from "../../../public/assets/images/image3.jpg";
-import customer1 from "../../../public/assets/images/customer1.jpg";
-import customer2 from "../../../public/assets/images/customer2.jpg";
-import customer3 from "../../../public/assets/images/customer3.jpg";
-import customer4 from "../../../public/assets/images/customer4.jpg";
-import customer5 from "../../../public/assets/images/customer5.jpg";
+
 import services1 from "../../../public/assets/services-1.jpg";
 import services2 from "../../../public/assets/services-2.jpg";
 import services3 from "../../../public/assets/services-3.jpg";
@@ -15,15 +10,7 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { TimerIcon } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
-import Autoplay from "embla-carousel-autoplay";
 
-import {
-  Carousel,
-  CarouselContent,
-  CarouselItem,
-  CarouselNext,
-  CarouselPrevious,
-} from "@/components/ui/carousel";
 import { useAnnouncementStore } from "@/lib/store/announcement";
 import { useEffect, useState } from "react";
 import {
@@ -36,45 +23,30 @@ import {
   AlertDialogTitle,
   AlertDialogTrigger,
 } from "@/components/ui/alert-dialog";
+import { getAllServices } from "../actions/services";
+import CarouselCard from "@/components/users/CarouselCard";
 
-export default function page() {
-  const announcement = useAnnouncementStore((state) => state.announcement);
-  const clearAnnouncement = useAnnouncementStore(
-    (state) => state.clearAnnouncement
-  );
-  const [isOpen, setIsOpen] = useState(false);
+export default async function HomePage() {
+  // const announcement = useAnnouncementStore((state) => state.announcement);
+  // const clearAnnouncement = useAnnouncementStore(
+  //   (state) => state.clearAnnouncement
+  // );
+  // const [isOpen, setIsOpen] = useState(false);
 
-  useEffect(() => {
-    if (announcement?.isOpen) {
-      setIsOpen(true);
-    }
-  }, [announcement]);
+  // useEffect(() => {
+  //   if (announcement?.isOpen) {
+  //     setIsOpen(true);
+  //   }
+  // }, [announcement]);
 
-  const handleDismiss = () => {
-    setIsOpen(false);
-    clearAnnouncement(); // Clear the announcement from the store
-  };
-
+  // const handleDismiss = () => {
+  //   setIsOpen(false);
+  //   clearAnnouncement(); // Clear the announcement from the store
+  // };
+  const services = (await getAllServices()) as any;
+  const limitedServices = services.slice(0, 3);
   return (
     <div className='mt-20'>
-      {announcement && (
-        <AlertDialog open={isOpen} onOpenChange={setIsOpen}>
-          <AlertDialogTrigger className='hidden'></AlertDialogTrigger>
-          <AlertDialogContent>
-            <AlertDialogHeader>
-              <AlertDialogTitle>{announcement.title}</AlertDialogTitle>
-              <AlertDialogDescription>
-                {announcement.description}
-              </AlertDialogDescription>
-            </AlertDialogHeader>
-            <AlertDialogFooter>
-              <AlertDialogAction onClick={handleDismiss}>
-                Dismiss
-              </AlertDialogAction>
-            </AlertDialogFooter>
-          </AlertDialogContent>
-        </AlertDialog>
-      )}
       <section className='flex flex-col gap-10 md:flex-col lg:flex-row'>
         <div className='w-full flex flex-col items-center md:items-start gap-5'>
           <h1 className='text-2xl md:text-4xl font-semibold text-zinc-700 leading-snug'>
@@ -119,164 +91,51 @@ export default function page() {
           Top most selected services in clinic
         </p>
 
-        <div className='mt-16 flex flex-col md:flex-col lg:flex-row gap-12'>
-          <Image
-            src={services1}
-            alt='Services1'
-            height={500}
-            width={500}
-            className='object-cover rounded-md'
-          />
-          <div>
-            <h1 className='text-2xl uppercase tracking-wider font-semibold'>
-              Dental Cleaning
-            </h1>
-            <div className=' flex flex-col gap-5'>
-              <p className='mt-5 text-zinc-500 text-sm leading-snug'>
-                Dental cleaning involves removing plaque, decay, and other
-                dental debris from your teeth. We offer various types of
-                cleanings, including root canal, root canal fillings, and dental
-                extractions.
-              </p>
-              <p className='flex gap-2 text-teal-500'>
-                <TimerIcon />: 2hrs
-              </p>
-            </div>
-            <Link href='/appoint'>
-              <Button className='mt-5 bg-teal-600 hover:bg-teal-700'>
-                Book an appointment
-              </Button>
-            </Link>
-          </div>
-        </div>
-
-        <div className='mt-24 flex flex-col md:flex-col lg:flex-row-reverse gap-12'>
-          <Image
-            src={services2}
-            alt='Servicesv2'
-            height={500}
-            width={500}
-            className='object-cover rounded-md'
-          />
-          <div>
-            <h1 className='text-2xl uppercase tracking-wider font-semibold'>
-              Dental Filling
-            </h1>
-            <div className=' flex flex-col gap-5'>
-              <p className='mt-5 text-zinc-500 text-sm leading-snug'>
-                Dental filling helps restore your teeth to their natural shape
-                and appearance. We offer various methods, including root canal,
-                periodontal, and root canal fillings.
-              </p>
-              <p className='flex gap-2 text-teal-500'>
-                <TimerIcon />: 3hrs
-              </p>
-            </div>
-            <Link href='/appoint'>
-              <Button className='mt-5 bg-teal-600 hover:bg-teal-700'>
-                Book an appointment
-              </Button>
-            </Link>
-          </div>
-        </div>
-
-        <div className='mt-24 flex flex-col md:flex-col lg:flex-row gap-12'>
-          <Image
-            src={services3}
-            alt='Services3'
-            height={500}
-            width={500}
-            className='object-cover rounded-md'
-          />
-          <div>
-            <h1 className='text-2xl uppercase tracking-wider font-semibold'>
-              Orthodontics
-            </h1>
-            <div className=' flex flex-col gap-5'>
-              <p className='mt-5 text-zinc-500 text-sm leading-snug'>
-                Orthodontics help protect your teeth and gums from injury. We
-                offer various types, including bridge braces, interlocking
-                braces, and dental crowns.
-              </p>
-              <p className='flex gap-2 text-teal-500'>
-                <TimerIcon />: 2hrs
-              </p>
-            </div>
-            <Link href='/appoint'>
-              <Button className='mt-5 bg-teal-600 hover:bg-teal-700'>
-                Book an appointment
-              </Button>
-            </Link>
-          </div>
+        <div>
+          {limitedServices &&
+            //@ts-ignore
+            limitedServices.map((service: any) => (
+              <div
+                className='mt-16 flex flex-col md:flex-col lg:flex-row gap-12'
+                key={service.id}
+              >
+                <Image
+                  src={service.image}
+                  alt='Services1'
+                  height={500}
+                  width={500}
+                  className='object-cover rounded-md'
+                />
+                <div>
+                  <h1 className='text-2xl uppercase tracking-wider font-semibold'>
+                    {service.name}
+                  </h1>
+                  <div className=' flex flex-col gap-5'>
+                    <p className='mt-5 text-zinc-500 text-sm leading-snug'>
+                      {service.description}
+                    </p>
+                    <p className='flex gap-2 text-teal-500'>
+                      <TimerIcon />: {service.duration} hr/hrs
+                    </p>
+                  </div>
+                  <Link
+                    href={{
+                      pathname: "/appoint",
+                      query: { service: service.name },
+                    }}
+                  >
+                    <Button className='mt-5 bg-teal-600 hover:bg-teal-700'>
+                      Book an appointment
+                    </Button>
+                  </Link>
+                </div>
+              </div>
+            ))}
         </div>
       </section>
 
       <section className='mt-[10rem]'>
-        <h1 className='text-4xl text-zinc-700 font-bold'>
-          Satisfied Customers
-        </h1>
-        <p className='text-sm text-zinc-500'>Customers has smiled again</p>
-
-        <div className='mt-24 p-10 '>
-          <Carousel
-            plugins={[
-              Autoplay({
-                delay: 2000,
-              }),
-            ]}
-            className='z-0'
-          >
-            <CarouselContent>
-              <CarouselItem className='md:basis-1/2 lg:basis-1/4'>
-                <Image
-                  src={customer1}
-                  alt='Customer 1'
-                  width={300}
-                  height={300}
-                  className='rounded-md h-full'
-                />
-              </CarouselItem>
-              <CarouselItem className='md:basis-1/2 lg:basis-1/4'>
-                <Image
-                  src={customer2}
-                  alt='Customer 2'
-                  width={300}
-                  height={300}
-                  className='rounded-md h-full'
-                />
-              </CarouselItem>
-              <CarouselItem className='md:basis-1/2 lg:basis-1/4'>
-                <Image
-                  src={customer3}
-                  alt='Customer 3'
-                  width={300}
-                  height={300}
-                  className='rounded-md h-full'
-                />
-              </CarouselItem>
-              <CarouselItem className='md:basis-1/2 lg:basis-1/4'>
-                <Image
-                  src={customer4}
-                  alt='Customer 4'
-                  width={300}
-                  height={300}
-                  className='rounded-md h-full'
-                />
-              </CarouselItem>
-              <CarouselItem className='md:basis-1/2 lg:basis-1/4'>
-                <Image
-                  src={customer5}
-                  alt='Customer 5'
-                  width={300}
-                  height={300}
-                  className='rounded-md h-full'
-                />
-              </CarouselItem>
-            </CarouselContent>
-            <CarouselPrevious />
-            <CarouselNext />
-          </Carousel>
-        </div>
+        <CarouselCard />
       </section>
     </div>
   );

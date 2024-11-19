@@ -40,9 +40,19 @@ import {
   DialogTitle,
 } from "../ui/dialog";
 import { CircleAlert } from "lucide-react";
+import { useParams, useRouter, useSearchParams } from "next/navigation";
 
-export default function AppointmentForm({ userId }: { userId: string }) {
+export default function AppointmentForm({
+  userId,
+  servicesName,
+}: {
+  userId: string;
+  servicesName: string;
+}) {
   const { toast } = useToast();
+  const searchParams = useSearchParams(); // Get the query parameters
+  const defaultService = searchParams.get("service") || "";
+
   const [appointmentDetails, setAppointmentDetails] = useState<{
     id: string;
     patientName: string;
@@ -140,12 +150,12 @@ export default function AppointmentForm({ userId }: { userId: string }) {
   return (
     <>
       <Form {...form}>
-        <div className="grid grid-cols-2 gap-10">
-          <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-8">
-            <div className="flex flex-col gap-2 mt-3">
+        <div className='grid grid-cols-2 gap-10'>
+          <form onSubmit={form.handleSubmit(onSubmit)} className='space-y-8'>
+            <div className='flex flex-col gap-2 mt-3'>
               <FormField
                 control={form.control}
-                name="service"
+                name='service'
                 render={({ field }) => (
                   <FormItem>
                     <FormLabel>Service</FormLabel>
@@ -154,18 +164,23 @@ export default function AppointmentForm({ userId }: { userId: string }) {
                       onValueChange={(value) => {
                         form.setValue("service", value);
                       }}
-                      defaultValue={form.getValues("service")}
+                      defaultValue={defaultService}
                     >
                       <FormControl>
                         <SelectTrigger>
-                          <SelectValue placeholder="Select a service" />
+                          <SelectValue placeholder='Select a service' />
                         </SelectTrigger>
                       </FormControl>
 
                       <SelectContent>
-                        <SelectItem value="cleaning">Teeth Cleaning</SelectItem>
-                        <SelectItem value="filling">Teeth Filling</SelectItem>
-                        <SelectItem value="braces">Teeth Braces</SelectItem>
+                        {
+                          //@ts-ignore
+                          servicesName.map((service: any) => (
+                            <SelectItem key={service} value={service}>
+                              {service}
+                            </SelectItem>
+                          ))
+                        }
                       </SelectContent>
                     </Select>
 
@@ -175,12 +190,12 @@ export default function AppointmentForm({ userId }: { userId: string }) {
               />
               <FormField
                 control={form.control}
-                name="patientName"
+                name='patientName'
                 render={({ field }) => (
                   <FormItem>
                     <FormLabel>Patient Name</FormLabel>
                     <FormControl>
-                      <Input placeholder="shadcn" {...field} />
+                      <Input placeholder='shadcn' {...field} />
                     </FormControl>
 
                     <FormMessage />
@@ -189,12 +204,12 @@ export default function AppointmentForm({ userId }: { userId: string }) {
               />
               <FormField
                 control={form.control}
-                name="patientPhone"
+                name='patientPhone'
                 render={({ field }) => (
                   <FormItem>
                     <FormLabel>Phone Number</FormLabel>
                     <FormControl>
-                      <Input type="number" placeholder="shadcn" {...field} />
+                      <Input type='number' placeholder='shadcn' {...field} />
                     </FormControl>
 
                     <FormMessage />
@@ -203,13 +218,13 @@ export default function AppointmentForm({ userId }: { userId: string }) {
               />
               <FormField
                 control={form.control}
-                name="hour"
+                name='hour'
                 render={({ field }) => (
                   <FormItem>
                     <FormLabel>Hour</FormLabel>
                     <FormControl>
                       <Input
-                        type="time"
+                        type='time'
                         {...field}
                         onFocus={(e) => e.target.showPicker()}
                       />
@@ -221,13 +236,13 @@ export default function AppointmentForm({ userId }: { userId: string }) {
               />
               <FormField
                 control={form.control}
-                name="date"
+                name='date'
                 render={({ field }) => (
                   <FormItem>
                     <FormLabel>Date</FormLabel>
                     <FormControl>
                       <Input
-                        type="date"
+                        type='date'
                         {...field}
                         onFocus={(e) => e.target.showPicker()}
                         min={new Date().toISOString().split("T")[0]}
@@ -238,12 +253,12 @@ export default function AppointmentForm({ userId }: { userId: string }) {
                 )}
               />
             </div>
-            <Button type="submit">Create Appointment</Button>
+            <Button type='submit'>Create Appointment</Button>
           </form>
           <div>
-            <div className="mt-3">
-              <ul className="list-disc text-sm text-zinc-500 w-[30rem]">
-                <h1 className="text-xl text-emerald-500 mb-3">Read Me:</h1>
+            <div className='mt-3'>
+              <ul className='list-disc text-sm text-zinc-500 w-[30rem]'>
+                <h1 className='text-xl text-emerald-500 mb-3'>Read Me:</h1>
                 <li>Make sure to input all fields</li>
                 <li>Our working hours is 9:00 AM - 4:00 PM</li>
                 <li>Our working days are Monday - Sunday</li>
@@ -257,11 +272,11 @@ export default function AppointmentForm({ userId }: { userId: string }) {
                 </li>
               </ul>
               <Image
-                src="/assets/fillup.jpg"
-                alt="Image fill"
+                src='/assets/fillup.jpg'
+                alt='Image fill'
                 width={500}
                 height={50}
-                className="object-contain "
+                className='object-contain '
               />
             </div>
           </div>
@@ -295,11 +310,11 @@ export default function AppointmentForm({ userId }: { userId: string }) {
               )}
             </div>
             <DialogFooter>
-              <span className="flex flex-col gap-2 ">
-                <span className="font-bold flex gap-1 text-sm text-red-500">
-                  <CircleAlert className="w-5 h-5 " /> NOTE:
+              <span className='flex flex-col gap-2 '>
+                <span className='font-bold flex gap-1 text-sm text-red-500'>
+                  <CircleAlert className='w-5 h-5 ' /> NOTE:
                 </span>
-                <span className="text-sm text-muted-foreground">
+                <span className='text-sm text-muted-foreground'>
                   Your account will be deactivated if you book an appointment
                   and fail to show up three times.
                 </span>

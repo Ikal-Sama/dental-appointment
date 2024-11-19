@@ -6,9 +6,9 @@ import React from "react";
 export default function page() {
   return (
     <div>
-      <h1 className="my-5 text-xl font-semibold flex gap-2">
+      <h1 className='my-5 text-xl font-semibold flex gap-2'>
         <LockKeyhole />
-        Settings
+        Profile Settings
       </h1>
       <EditProfileComponent />
       <ChangePassword />
