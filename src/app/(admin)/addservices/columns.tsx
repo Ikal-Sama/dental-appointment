@@ -1,5 +1,6 @@
 "use client";
 
+import { deleteService } from "@/app/actions/services";
 import { Button } from "@/components/ui/button";
 import {
   DropdownMenu,
@@ -13,6 +14,19 @@ import { useToast } from "@/components/ui/use-toast";
 import { ColumnDef } from "@tanstack/react-table";
 import { MoreHorizontal, PhilippinePeso } from "lucide-react";
 import Image from "next/image";
+import Link from "next/link";
+
+import {
+  AlertDialog,
+  AlertDialogAction,
+  AlertDialogCancel,
+  AlertDialogContent,
+  AlertDialogDescription,
+  AlertDialogFooter,
+  AlertDialogHeader,
+  AlertDialogTitle,
+  AlertDialogTrigger,
+} from "@/components/ui/alert-dialog";
 
 // This type is used to define the shape of our data.
 // You can use a Zod schema here if you want.
@@ -101,24 +115,79 @@ function ActionsCell({ row }: { row: any }) {
   //     }
   //   });
   // };
+
+  const handleDeleteService = async (id: string) => {
+    try {
+      const res = await deleteService(id);
+      if (res.success) {
+        toast({
+          title: "Service deleted",
+          description: `${res.message}`,
+        });
+      } else {
+        toast({
+          variant: "destructive",
+          title: "Something went wrong",
+          description: `${res.error}`,
+        });
+      }
+    } catch (error) {
+      toast({
+        variant: "destructive",
+        title: "Something went wrong",
+        description: `${error}`,
+      });
+    }
+  };
+
   return (
-    <DropdownMenu>
-      <DropdownMenuTrigger asChild>
-        <Button variant='ghost' className='h-8 w-8 p-0'>
-          <span className='sr-only'>Open menu</span>
-          <MoreHorizontal className='h-4 w-4' />
-        </Button>
-      </DropdownMenuTrigger>
-      <DropdownMenuContent align='end'>
-        <DropdownMenuLabel>Actions</DropdownMenuLabel>
-        <DropdownMenuSeparator />
-        <DropdownMenuItem className='text-sm flex items-center gap-2 p-1 text-emerald-500 cursor-pointer hover:bg-zinc-100 focus:outline-none'>
-          Update
-        </DropdownMenuItem>
-        <DropdownMenuItem className='text-sm flex items-center gap-2 p-1 text-red-500 cursor-pointer hover:bg-zinc-100 focus:outline-none'>
-          Delete
-        </DropdownMenuItem>
-      </DropdownMenuContent>
-    </DropdownMenu>
+    <div>
+      <DropdownMenu>
+        <DropdownMenuTrigger asChild>
+          <Button variant='ghost' className='h-8 w-8 p-0'>
+            <span className='sr-only'>Open menu</span>
+            <MoreHorizontal className='h-4 w-4' />
+          </Button>
+        </DropdownMenuTrigger>
+        <DropdownMenuContent align='end'>
+          <DropdownMenuLabel>Actions</DropdownMenuLabel>
+          <DropdownMenuSeparator />
+          <Link href={`/addservices/update/${id}`}>
+            <DropdownMenuItem className='text-sm flex items-center gap-2 p-1 text-emerald-500 cursor-pointer hover:bg-zinc-100 focus:outline-none'>
+              View
+            </DropdownMenuItem>
+          </Link>
+          <DropdownMenuItem
+            className='text-sm flex items-center gap-2 p-1 text-red-500 cursor-pointer hover:bg-zinc-100 focus:outline-none'
+            onClick={() => {
+              document.getElementById("trigger-delete")?.click();
+            }}
+          >
+            Delete
+          </DropdownMenuItem>
+        </DropdownMenuContent>
+      </DropdownMenu>
+
+      <AlertDialog>
+        <AlertDialogTrigger asChild>
+          <button id='trigger-delete'></button>
+        </AlertDialogTrigger>
+        <AlertDialogContent>
+          <AlertDialogHeader>
+            <AlertDialogTitle>Are you absolutely sure?</AlertDialogTitle>
+            <AlertDialogDescription>
+              This action cannot be undone. This will permanently delete your
+              account and remove your data from our servers.
+            </AlertDialogDescription>
+          </AlertDialogHeader>
+          <AlertDialogFooter>
+            <AlertDialogCancel>Cancel</AlertDialogCancel>
+            <AlertDialogAction onClick={() => handleDeleteService(id)}>
+              Continue
+            </AlertDialogAction>
+          </AlertDialogFooter>
+        </AlertDialogContent>
+      </AlertDialog>
+    </div>
   );
 }

@@ -90,4 +90,25 @@ export const ServicesSchema = z.object({
       z.number().positive("Duration must be a positive number") // Prevent zero and negative values
     ),
     image: z.string().min(1, "Image is required"), // Ensure the image field is not empty
-  });
+ });
+
+export const StaffSchema = z.object({
+    email: z.string().email({
+        message: "Email is required"
+    }),
+    password: z.string().min(6,{
+        message: "Minimum 6 characters required"
+    }),
+    confirmPassword: z.string().min(6,{
+        message: "Minimum 6 characters required"
+    }),
+    name: z.string().min(1,{
+        message: "Name is required"
+    }),
+    role: z.string().min(1,{
+        message: "Role is required"
+    })
+}).refine((data) => data.password === data.confirmPassword, {
+    message: "Passwords do not match",
+    path: ["confirmPassword"], // Attach the error to the `confirmPassword` field
+});

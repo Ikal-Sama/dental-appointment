@@ -6,7 +6,9 @@ import User from '@/models/user-model';
 import Appointments from '@/models/appointments';
 import { revalidatePath } from 'next/cache';
 import Notification from '@/models/notification';
-
+import { z } from 'zod';
+import { StaffSchema } from '@/lib/validateForm';
+import bcrypt from 'bcryptjs'
 
 export async function markAppointmentAsDone(id: string){
     try {
@@ -155,4 +157,25 @@ export async function markNotificationAsRead(id: string) {
     }
   }
   
+export const createNewStaff = async (values: z.infer<typeof StaffSchema>) => {
+  try {
+    const existingStaff = await User.findOne({
+      email: values.email
+    })
+    if(existingStaff) {
+      return {success:false, error: 'Staff already exists'}
+    }
+    const hashedPassword = await bcrypt.hash(values.password, 10);
+  
+    const newStaff = await User.create({
+      name: values.name,
+      email: values.email,
+      password: hashedPassword,
+      role: values.role
+    })
 
+    return {success: true, data: newStaff}
+  } catch (error) {
+    return {success: false, error: 'Something went wrong'}
+  }
+}

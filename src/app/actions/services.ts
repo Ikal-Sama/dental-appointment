@@ -37,3 +37,40 @@ export const getAllServices = async () => {
         return {success: false, error: "Something went wrong"}
     }
 }
+
+export const getServiceById = async(id: string) => {
+    try {
+        await dbConnect()
+        const service = await Services.findById(id)
+        if(!service) {
+            return {error: 'Service not found', success: false}
+        }
+        return {success: true, data: service};
+    } catch (error) {
+        return {success: false, error: 'Something went wrong'}
+    }
+}
+
+export const updateService = async(serviceId: string, values: z.infer<typeof ServicesSchema> ) => {
+    try {
+        const service = await Services.findByIdAndUpdate(serviceId, {
+            name: values.name,
+            description: values.description,
+            price: values.price,
+            duration: values.duration,
+            image: values.image
+        }, {new: true})
+        return {success: true, data: service}
+    } catch (error) {
+        return {success:false, error: 'Something went wrong updating the service'}
+    }
+}
+
+export const deleteService = async(serviceId: string) => {
+    try {
+        await Services.findByIdAndDelete(serviceId)
+        return {success: true, message: "Service Deleted Successfully"}
+    } catch (error) {
+        return {success: false, error: 'Something went wrong deleting the service'}
+    }
+}

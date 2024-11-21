@@ -12,7 +12,7 @@ export default async function AllStaff() {
   ) as any;
 
   return (
-    <Card>
+    <Card className='p-2'>
       <DataTable columns={columns} data={filteredUsers} />
     </Card>
   );
