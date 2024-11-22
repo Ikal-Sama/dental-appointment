@@ -79,7 +79,7 @@ export default function AppointmentForm({
   const form = useForm<z.infer<typeof AppointmentSchema>>({
     resolver: zodResolver(AppointmentSchema),
     defaultValues: {
-      service: "",
+      service: defaultService || "",
       date: "",
       hour: "",
       patientName: "",
@@ -88,8 +88,6 @@ export default function AppointmentForm({
   });
 
   async function onSubmit(values: z.infer<typeof AppointmentSchema>) {
-    console.log("onSubmit called with values:", values);
-
     const selectedDate = new Date(values.date).toISOString().split("T")[0];
     const selectedTime = values.hour;
 
@@ -139,7 +137,6 @@ export default function AppointmentForm({
         }
       })
       .catch((e) => {
-        console.error("Error creating appointment:", e);
         toast({
           variant: "destructive",
           title: "Something went wrong",
