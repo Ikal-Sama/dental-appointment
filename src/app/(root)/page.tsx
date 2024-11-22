@@ -25,26 +25,12 @@ import {
 } from "@/components/ui/alert-dialog";
 import { getAllServices } from "../actions/services";
 import CarouselCard from "@/components/users/CarouselCard";
+import AnnouncementBanner from "@/components/users/announcement-banner";
 
 export default async function HomePage() {
-  // const announcement = useAnnouncementStore((state) => state.announcement);
-  // const clearAnnouncement = useAnnouncementStore(
-  //   (state) => state.clearAnnouncement
-  // );
-  // const [isOpen, setIsOpen] = useState(false);
-
-  // useEffect(() => {
-  //   if (announcement?.isOpen) {
-  //     setIsOpen(true);
-  //   }
-  // }, [announcement]);
-
-  // const handleDismiss = () => {
-  //   setIsOpen(false);
-  //   clearAnnouncement(); // Clear the announcement from the store
-  // };
   const services = (await getAllServices()) as any;
   const limitedServices = services.slice(0, 3);
+
   return (
     <div className='mt-20'>
       <section className='flex flex-col gap-10 md:flex-col lg:flex-row'>
@@ -84,6 +70,8 @@ export default async function HomePage() {
           />
         </div>
       </section>
+
+      <AnnouncementBanner />
 
       <section className='mt-[10rem]'>
         <h1 className='text-4xl text-zinc-700 font-bold'>Popular Services</h1>

@@ -1,3 +1,4 @@
+import { title } from 'process'
 import * as z from 'zod'
 
 export const LoginSchema =z.object({
@@ -112,3 +113,17 @@ export const StaffSchema = z.object({
     message: "Passwords do not match",
     path: ["confirmPassword"], // Attach the error to the `confirmPassword` field
 });
+
+export const AnnouncementSchema = z.object({
+    title: z.string().min(5, 'Title must be at least 5 characters long'),
+    description: z.string().min(5, 'Description must be at least 5 characters long'),
+    type: z.enum(['discount', 'closed', 'other'], {
+      errorMap: () => ({ message: 'Invalid announcement type' }),
+    }),
+    status: z.enum(['active', 'inactive']).optional(),
+    duration: z.object({
+        from: z.preprocess((val) => (typeof val === "string" ? new Date(val) : val), z.date()),
+        to: z.preprocess((val) => (typeof val === "string" ? new Date(val) : val), z.date()),
+      }),
+  });
+  

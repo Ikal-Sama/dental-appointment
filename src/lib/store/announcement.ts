@@ -4,28 +4,26 @@
 import { create } from "zustand";
 import { persist } from "zustand/middleware";
 
-type Announcement =  {
-    id: number,
+export type Announcement =  {
+    id: string,
     title: string,
     description: string,
-    isOpen: boolean,
+    status: boolean,
+    type: string,
+    duration: {
+        from: Date,
+        to: Date,
+    },
 }
 
-type AnnouncementState = {
-  announcement: Announcement | null;
+interface AnnouncementState {
+  announcement: Announcement[];
   setAnnouncement: (data: Announcement) => void;
   clearAnnouncement: () => void;
 };
 
-export const useAnnouncementStore = create<AnnouncementState>()(
-  persist(
-    (set) => ({
-      announcement: null, // Initial state
-      setAnnouncement: (data) => set({ announcement: data }), // Set announcement
-      clearAnnouncement: () => set({ announcement: null }), // Clear announcement
-    }),
-    {
-      name: "announcement-storage", // Key for localStorage
-    }
-  )
-);
+export const useAnnouncementStore = create<AnnouncementState>()((set) => ({
+  announcement: [],
+  setAnnouncement: () => {},
+  clearAnnouncement: () => {},
+}))
