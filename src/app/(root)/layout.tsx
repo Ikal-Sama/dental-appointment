@@ -21,7 +21,7 @@ export default async function UsersLayout({
   return (
     <>
       <Navbar />
-      <main className="min-h-[calc(100vh_-_theme(spacing.16))]  bg-muted/40 p-4 md:p-8">
+      <main className='min-h-[calc(100vh_-_theme(spacing.16))] bg-muted/40 p-4 md:p-8'>
         {children}
       </main>
       <Footer />

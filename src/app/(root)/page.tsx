@@ -53,6 +53,7 @@ export default async function HomePage() {
             </Button>
           </Link>
         </div>
+
         <div className='w-full flex justify-center relative'>
           <Image
             src={HeroImage1}

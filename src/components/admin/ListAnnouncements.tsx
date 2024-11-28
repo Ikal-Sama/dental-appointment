@@ -80,6 +80,7 @@ export default function ListAnnouncements({
                   )}{" "}
                 </p>
               </div>
+              <AlertAnnouncementDelete announcementId={item._id} />
               <DialogEditAnnouncement announcementId={item._id} />
             </Card>
           ))}

@@ -10,7 +10,7 @@ import background from "../../../../public/assets/images/servicebg.png";
 export default async function ServicesPage() {
   const services = (await getAllServices()) as any;
   return (
-    <div>
+    <div className=''>
       <div
         className='rounded-md h-[20rem] w-full p-12 text-white'
         style={{
@@ -44,7 +44,7 @@ export default async function ServicesPage() {
               <h1 className='text-3xl lg:text-4xl font-bold text-teal-600 '>
                 {service.name}
               </h1>
-              <p className='w-[35rem] mt-3'>{service.description}</p>
+              <p className='w-[35rem] mt-3 '>{service.description}</p>
 
               <p className='my-3 text-teal-500 flex gap-3'>
                 <strong>
